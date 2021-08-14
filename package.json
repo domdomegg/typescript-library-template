@@ -1,6 +1,6 @@
 {
   "name": "typescript-library-template",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "Template for creating TypeScript libraries",
   "license": "MIT",
   "author": "Adam Jones (domdomegg)",
@@ -13,16 +13,21 @@
     "pretest": "npm run build",
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "prettier --parser typescript \"{src,test}/**/*.ts\" -l",
-    "lint:fix": "prettier --parser typescript \"{src,test}/**/*.ts\" --write",
+    "lint": "eslint src test --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint src test --ext .js,.jsx,.ts,.tsx --fix",
     "clean": "rm -rf dist",
     "build": "tsc",
     "prepublishOnly": "npm run clean && npm run build"
   },
   "devDependencies": {
     "@types/jest": "^27.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.29.1",
+    "@typescript-eslint/parser": "^4.29.1",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-import": "^2.24.0",
     "jest": "^27.0.6",
-    "prettier": "^2.3.2",
     "ts-jest": "^27.0.4",
     "typescript": "^4.3.5"
   },
