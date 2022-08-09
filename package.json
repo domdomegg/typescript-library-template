@@ -4,6 +4,10 @@
   "description": "Template for creating TypeScript libraries",
   "license": "MIT",
   "author": "Adam Jones (domdomegg)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/domdomegg/typescript-library-template.git"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
