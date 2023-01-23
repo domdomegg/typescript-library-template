@@ -18,7 +18,7 @@
     "test:watch": "jest --watch",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "clean": "rm -rf dist",
-    "build": "tsc",
+    "build": "tsc --project tsconfig.build.json",
     "prepublishOnly": "npm run clean && npm run build"
   },
   "devDependencies": {
