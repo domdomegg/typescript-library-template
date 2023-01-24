@@ -1,8 +1,5 @@
 {
   "extends": "@tsconfig/node-lts-strictest/tsconfig.json",
-  "compilerOptions": {
-    "noEmit": true,
-  },
   "include": [
     "src/**/*.ts"
   ],
