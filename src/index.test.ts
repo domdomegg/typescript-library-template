@@ -1,3 +1,4 @@
+import { test, expect } from 'vitest';
 import { multiply, sum } from './index';
 
 test('adds postiive numbers', () => {
