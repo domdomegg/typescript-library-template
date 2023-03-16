@@ -4,7 +4,7 @@ Personal template for creating TypeScript libraries.
 
 ## Quick start
 
-1. If it should be published to NPM, add the `NPM_TOKEN` secret. Otherwise, add `"private": true` in `package.json`.
+1. If it should be published to NPM, add the `NPM_TOKEN` secret (make sure not to leave a trailing newline in there!). Otherwise, add `"private": true` in `package.json`.
 2. Update the package name, description and repo URL in `package.json`
 3. Add the repo to the [file sync automation rules](https://github.com/domdomegg/domdomegg/blob/master/.github/workflows/repo-file-sync.yaml)
 4. Update the README, using the template commented out below
