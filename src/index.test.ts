@@ -16,7 +16,7 @@ test('adds a negative and positive number', () => {
   expect(sum(-10001, 1345)).toBe(-8656);
 });
 
-test('multiplies postiive numbers', () => {
+test('multiplies positive numbers', () => {
   expect(multiply(1, 3)).toBe(3);
   expect(multiply(2, 3)).toBe(6);
   expect(multiply(10001, 1345)).toBe(13451345);
