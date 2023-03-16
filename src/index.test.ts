@@ -1,7 +1,7 @@
 import { test, expect } from 'vitest';
 import { multiply, sum } from './index';
 
-test('adds postiive numbers', () => {
+test('adds positive numbers', () => {
   expect(sum(1, 3)).toBe(4);
   expect(sum(10001, 1345)).toBe(11346);
 });
