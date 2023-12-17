@@ -22,11 +22,12 @@
     "prepublishOnly": "npm run clean && npm run build"
   },
   "devDependencies": {
-    "@tsconfig/node-lts-strictest": "^18.12.1",
-    "eslint": "^8.36.0",
-    "eslint-config-domdomegg": "^1.2.1",
-    "typescript": "^4.9.5",
-    "vitest": "^0.29.2"
+    "@tsconfig/node-lts": "^20.1.0",
+    "@tsconfig/strictest": "^2.0.2",
+    "eslint": "^8.56.0",
+    "eslint-config-domdomegg": "^1.2.3",
+    "typescript": "^5.3.3",
+    "vitest": "^1.0.4"
   },
   "eslintConfig": {
     "extends": [
