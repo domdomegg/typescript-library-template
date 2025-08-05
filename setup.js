@@ -79,14 +79,34 @@ EOF`, 'Setting up branch protection');
 
 function addToFileSyncAutomation(repoUrl) {
 	console.log('⏳ Adding repository to file sync automation...');
-	const syncConfigUrl = 'repos/domdomegg/domdomegg/contents/.github/workflows/repo-file-sync.yaml';
-	const syncConfig = exec(`gh api ${syncConfigUrl} --jq .content | base64 -d`);
 
 	const repoMatch = repoUrl.match(/github\.com[/:]([\w-]+)\/([\w-]+)/);
+	if (!repoMatch) {
+		throw new Error(`Could not parse repository URL: ${repoUrl}`);
+	}
+
 	const [, owner, repo] = repoMatch;
 	const newRepoEntry = `            ${owner}/${repo}`;
 
-	if (!syncConfig.includes(newRepoEntry.trim())) {
+	// Create a temporary directory for cloning
+	const tempDir = path.join(__dirname, `.temp-clone-${Date.now()}`);
+
+	try {
+		// Clone the repository
+		console.log('⏳ Cloning domdomegg/domdomegg repository...');
+		exec(`git clone git@github.com:domdomegg/domdomegg.git ${tempDir}`);
+
+		// Read the sync config file
+		const syncConfigPath = path.join(tempDir, '.github/workflows/repo-file-sync.yaml');
+		const syncConfig = fs.readFileSync(syncConfigPath, 'utf8');
+
+		// Check if already exists
+		if (syncConfig.includes(newRepoEntry.trim())) {
+			console.log('ℹ️  Repository already in file sync automation');
+			return;
+		}
+
+		// Update the file content
 		let updatedConfig = syncConfig;
 
 		// Add to Dependabot automation section
@@ -101,20 +121,21 @@ function addToFileSyncAutomation(repoUrl) {
 			`$1$2\n${newRepoEntry}`,
 		);
 
-		const currentSha = exec(`gh api ${syncConfigUrl} --jq .sha`).trim();
+		// Write the updated config back to the file
+		fs.writeFileSync(syncConfigPath, updatedConfig);
 
-		const updatePayload = {
-			message: `Add ${owner}/${repo} to file sync automation`,
-			content: Buffer.from(updatedConfig).toString('base64'),
-			sha: currentSha,
-		};
+		// Commit and push changes
+		console.log('⏳ Committing and pushing changes...');
+		exec(`cd ${tempDir} && git add .github/workflows/repo-file-sync.yaml`);
+		exec(`cd ${tempDir} && git commit -m "Add ${owner}/${repo} to file sync automation"`);
+		exec(`cd ${tempDir} && git push origin master`);
 
-		exec(`gh api ${syncConfigUrl} -X PUT --input - << 'EOF'
-${JSON.stringify(updatePayload)}
-EOF`);
-		console.log('✅ Added to file sync automation');
-	} else {
-		console.log('ℹ️  Repository already in file sync automation');
+		console.log('✅ Added to file sync automation via direct push');
+	} finally {
+		// Clean up temporary directory
+		if (fs.existsSync(tempDir)) {
+			exec(`rm -rf ${tempDir}`);
+		}
 	}
 }
 
