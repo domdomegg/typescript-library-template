@@ -65,7 +65,7 @@ function setupBranchProtection() {
 {
   "required_status_checks": {
     "strict": false,
-    "contexts": ["ci lts/*", "ci (current)"]
+    "contexts": ["ci (lts/*)", "ci (current)"]
   },
   "enforce_admins": false,
   "required_pull_request_reviews": {
