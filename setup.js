@@ -29,15 +29,6 @@ function safeExec(command, description) {
 	}
 }
 
-function configureNpmToken(isPrivate) {
-	if (!isPrivate) {
-		console.log('⏳ Fetching NPM token from secrets repository...');
-		const npmToken = exec('gh api repos/domdomegg/secrets/contents/npm.txt --jq .content | base64 -d').trim();
-		exec(`gh secret set NPM_TOKEN --body "${npmToken}"`);
-		console.log('✅ NPM_TOKEN secret configured');
-	}
-}
-
 function updatePackageJson(packageName, repoUrl, isPrivate) {
 	const packageJsonPath = path.join(__dirname, 'package.json');
 	const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
@@ -198,7 +189,6 @@ async function main() {
 
 	const isPrivate = process.argv.includes('--private');
 
-	configureNpmToken(isPrivate);
 	updatePackageJson(packageName, repoUrl, isPrivate);
 	enableGitHubActionsPermissions();
 	setupBranchProtection();
