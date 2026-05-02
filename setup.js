@@ -46,7 +46,7 @@ function updatePackageJson(packageName, repoUrl, isPrivate) {
 }
 
 function enableGitHubActionsPermissions() {
-	safeExec('gh repo edit --enable-issues --enable-wiki=false --enable-projects=false', 'Configuring repository settings');
+	safeExec('gh repo edit --enable-issues --enable-wiki=false --enable-projects=false --enable-auto-merge', 'Configuring repository settings');
 	safeExec('gh api repos/:owner/:repo/actions/permissions/fork-pr-contributor-approval -X PUT --input - << \'EOF\'\n{"approval_policy":"first_time_contributors_new_to_github"}\nEOF', 'Enabling first-time contributors to trigger GitHub Actions');
 	safeExec('gh api repos/:owner/:repo/actions/permissions/workflow -X PUT --input - << \'EOF\'\n{"can_approve_pull_request_reviews":true}\nEOF', 'Allowing GitHub Actions to create and approve pull requests');
 }
